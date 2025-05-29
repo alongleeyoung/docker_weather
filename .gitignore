@@ -1,0 +1,40 @@
+# Node modules
+node_modules/
+*/node_modules/
+
+# 환경 변수 파일 (시크릿 정보)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 데이터베이스 관련 파일
+backend/database/db.js
+
+# React build files
+build/
+dist/
+
+# 로그 파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 운영체제 관련
+.DS_Store
+Thumbs.db
+
+# IDE 관련
+.vscode/
+.idea/
+
+# Docker 관련 (선택사항)
+# docker-compose.override.yml
+
+# API 키가 포함된 index.html (TMAP API 키 등)
+frontend/public/index.html
+
+# 기타 민감한 설정 파일들
+config/production.json
+config/development.json
