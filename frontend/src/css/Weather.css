@@ -1,0 +1,56 @@
+/* Weather.css */
+.weather-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.map-container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.info-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tour-info {
+  background-color: #f7fafc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tour-info h2 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: #333;
+}
+
+.tour-info p {
+  margin: 5px 0;
+  font-size: 18px;
+  color: #555;
+}
+
+.weather-info {
+  background-color: #f0f4f8;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weather-info p {
+  margin: 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.weather-info p span {
+  font-weight: bold;
+}
