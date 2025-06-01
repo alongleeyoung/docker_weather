@@ -14,13 +14,13 @@ const app = express();
 
 // CORS 설정
 app.use(cors({
-  origin: 'http://localhost:3000', // 리액트 앱 URL
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000', // 리액트 앱 URL
   credentials: true
 }));
 
 // 세션 설정
 app.use(session({
-  secret: 'your-session-secret',
+  secret: process.env.SESSION_SECRET || 'your-session-secret',
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false } // HTTPS를 사용하는 경우 true로 설정
@@ -37,11 +37,11 @@ const upload = multer({ storage: storage });
 // Cognito 클라이언트 초기화
 let client;
 async function initializeClient() {
-  const issuer = await Issuer.discover('https://cognito-idp.ap-northeast-2.amazonaws.com/ap-northeast-2_ASPxC0LQO');
+  const issuer = await Issuer.discover(process.env.COGNITO_ISSUER_URL || 'https://cognito-idp.ap-northeast-2.amazonaws.com/ap-northeast-2_ASPxC0LQO');
   client = new issuer.Client({
-    client_id: '1g7tqsl41uav7sa9bh43lfliju',
-    client_secret: 'sveitahhur3d2sh0l7bvmrfp1dfudsk7sl0sohueb5e5gkt87pc', // 실제 클라이언트 시크릿으로 변경
-    redirect_uris: ['http://localhost:3000'],
+    client_id: process.env.COGNITO_CLIENT_ID || 'your-client-id',
+    client_secret: process.env.COGNITO_CLIENT_SECRET || 'your-client-secret',
+    redirect_uris: [process.env.FRONTEND_URL || 'http://localhost:3000'],
     response_types: ['code']
   });
 }
@@ -75,7 +75,7 @@ app.post('/api/auth/token', async (req, res) => {
       return res.status(400).json({ success: false, message: '인증 코드가 필요합니다' });
     }
     const tokenSet = await client.callback(
-      'http://localhost:3000', // redirect_uri와 동일해야 함
+      process.env.FRONTEND_URL || 'http://localhost:3000', // redirect_uri와 동일해야 함
       { code },
       { nonce: req.session.nonce, state: req.session.state }
     );
@@ -203,7 +203,7 @@ app.get("/api/tourinfo/:localname/:countyname/:tourname", (req, res) => {
 });
 
 // 서버 시작
-const port = 3001;
+const port = process.env.BACKEND_PORT || 3001;
 app.listen(port, () => {
   console.log(`서버가 http://localhost:${port} 에서 실행 중입니다`);
 });
