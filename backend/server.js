@@ -1,10 +1,15 @@
-const express = require('express');
-const cors = require('cors');
-const multer = require('multer');
-const session = require('express-session');
-const { Issuer, generators } = require('openid-client');
-const db = require('./database/db');
+import express from 'express';
+import cors from 'cors';
+import multer from 'multer';
+import session from 'express-session';
 
+// openid-client import 방식 변경
+import * as openidClient from 'openid-client';
+const { Issuer, generators } = openidClient;
+
+import db from './database/db.js';  // .js 확장자 필수
+
+// 나머지 코드는 그대로
 const app = express();
 
 // CORS 설정

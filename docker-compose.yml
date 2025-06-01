@@ -1,0 +1,47 @@
+services:
+  # MySQL 서비스 제거 (기존 로컬 MySQL 사용)
+  # mysql: # 전체 주석 처리 또는 삭제
+
+  # Express 백엔드
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: weather_backend
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-3001}:3001"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=host.docker.internal  # 로컬 MySQL 접근
+      - DB_PORT=3306
+      - DB_USER=${DB_USER:-root}
+      - DB_PASSWORD=${DB_PASSWORD:-0203}
+      - DB_NAME=${DB_NAME:-weather}
+      - SESSION_SECRET=${SESSION_SECRET:-your-session-secret}
+      - COGNITO_CLIENT_ID=${COGNITO_CLIENT_ID}
+      - COGNITO_CLIENT_SECRET=${COGNITO_CLIENT_SECRET}
+      - COGNITO_DOMAIN=${COGNITO_DOMAIN}
+      - WEATHER_API_KEY=${WEATHER_API_KEY}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # Linux 호환성
+    networks:
+      - weather_network
+
+  # React 프론트엔드
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: weather_frontend
+    restart: unless-stopped
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend
+    networks:
+      - weather_network
+
+networks:
+  weather_network:
+    driver: bridge
