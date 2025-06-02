@@ -1,6 +1,6 @@
 # Weather Tour Application
 
-## 애플리케이션 실행 방법
+## 애플리케이션 실행 방법 with chatgpt 교정
 
 ### 사전 준비
 - Docker Desktop 설치
